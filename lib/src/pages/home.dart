@@ -1,7 +1,6 @@
-import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:sparkitecture/src/widgets/styled_scaffold.dart';
+import 'package:silverliningspodcasts/src/widgets/styled_scaffold.dart';
 
 class Home extends StatelessWidget {
   const Home({Key key}) : super(key: key);

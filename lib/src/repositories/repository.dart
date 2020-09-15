@@ -1,7 +1,7 @@
-import 'package:sparkitecture/src/helpers/constants.dart';
-import 'package:sparkitecture/src/helpers/secure_storage.dart';
-import 'package:sparkitecture/src/models/user.dart';
-import 'package:sparkitecture/src/repositories/api_provider.dart';
+import 'package:silverliningspodcasts/src/helpers/constants.dart';
+import 'package:silverliningspodcasts/src/helpers/secure_storage.dart';
+import 'package:silverliningspodcasts/src/models/user.dart';
+import 'package:silverliningspodcasts/src/repositories/api_provider.dart';
 
 class Repository {
   ApiProvider _apiProvider = ApiProvider();

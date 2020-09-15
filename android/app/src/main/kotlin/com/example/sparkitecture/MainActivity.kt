@@ -1,4 +1,4 @@
-package com.example.sparkitecture
+package com.example.silverliningspodcasts
 
 import io.flutter.embedding.android.FlutterActivity
 

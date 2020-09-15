@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:sparkitecture/src/blocs/authentication_bloc.dart';
-import 'package:sparkitecture/src/dtos/auth_info_dto.dart';
-import 'package:sparkitecture/src/helpers/constants.dart';
-import 'package:sparkitecture/src/widgets/styled_scaffold.dart';
-import 'package:sparkitecture/src/widgets/styled_text_field.dart';
+import 'package:silverliningspodcasts/src/blocs/authentication_bloc.dart';
+import 'package:silverliningspodcasts/src/dtos/auth_info_dto.dart';
+import 'package:silverliningspodcasts/src/helpers/constants.dart';
+import 'package:silverliningspodcasts/src/widgets/styled_scaffold.dart';
+import 'package:silverliningspodcasts/src/widgets/styled_text_field.dart';
 
 class Login extends StatelessWidget {
   const Login({Key key}) : super(key: key);

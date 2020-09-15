@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:sparkitecture/src/helpers/ignore.dart';
-import 'package:sparkitecture/src/helpers/reflector.dart';
+import 'package:silverliningspodcasts/src/helpers/ignore.dart';
+import 'package:silverliningspodcasts/src/helpers/reflector.dart';
 
 part 'user.g.dart';
 

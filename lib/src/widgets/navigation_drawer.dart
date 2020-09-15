@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sparkitecture/src/blocs/authentication_bloc.dart';
-import 'package:sparkitecture/src/helpers/constants.dart';
+import 'package:silverliningspodcasts/src/blocs/authentication_bloc.dart';
+import 'package:silverliningspodcasts/src/helpers/constants.dart';
 
 class NavigationDrawer extends StatelessWidget {
   @override
@@ -11,7 +11,7 @@ class NavigationDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           DrawerHeader(
-            child: Text('Sparkitecture'),
+            child: Text('silverliningspodcasts'),
             decoration: BoxDecoration(
               color: Theme.of(context).accentColor,
             ),

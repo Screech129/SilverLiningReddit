@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
-import 'package:sparkitecture/src/helpers/constants.dart';
-import 'package:sparkitecture/src/helpers/secure_storage.dart';
-import 'package:sparkitecture/src/models/user.dart';
+import 'package:silverliningspodcasts/src/helpers/constants.dart';
+import 'package:silverliningspodcasts/src/helpers/secure_storage.dart';
+import 'package:silverliningspodcasts/src/models/user.dart';
 
 class ApiProvider {
   Client _client = Client();

@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:sparkitecture/src/dtos/auth_info_dto.dart';
-import 'package:sparkitecture/src/helpers/constants.dart';
-import 'package:sparkitecture/src/helpers/secure_storage.dart';
-import 'package:sparkitecture/src/repositories/repository.dart';
+import 'package:silverliningspodcasts/src/dtos/auth_info_dto.dart';
+import 'package:silverliningspodcasts/src/helpers/constants.dart';
+import 'package:silverliningspodcasts/src/helpers/secure_storage.dart';
+import 'package:silverliningspodcasts/src/repositories/repository.dart';
 
 part 'authentication_event.dart';
 part 'authentication_state.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sparkitecture/src/widgets/navigation_drawer.dart';
+import 'package:silverliningspodcasts/src/widgets/navigation_drawer.dart';
 
 class StyledScaffold extends StatelessWidget {
   final String pageTtile;

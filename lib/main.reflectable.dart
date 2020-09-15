@@ -3,9 +3,9 @@
 
 import 'dart:core';
 import 'package:json_annotation/src/json_serializable.dart' as prefix2;
-import 'package:sparkitecture/src/helpers/ignore.dart' as prefix3;
-import 'package:sparkitecture/src/helpers/reflector.dart' as prefix0;
-import 'package:sparkitecture/src/models/user.dart' as prefix1;
+import 'package:silverliningspodcasts/src/helpers/ignore.dart' as prefix3;
+import 'package:silverliningspodcasts/src/helpers/reflector.dart' as prefix0;
+import 'package:silverliningspodcasts/src/models/user.dart' as prefix1;
 
 // ignore_for_file: prefer_adjacent_string_concatenation
 // ignore_for_file: prefer_collection_literals

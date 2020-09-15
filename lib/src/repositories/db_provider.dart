@@ -1,6 +1,6 @@
 import 'package:reflectable/reflectable.dart';
-import 'package:sparkitecture/src/helpers/reflector.dart';
-import 'package:sparkitecture/src/models/user.dart';
+import 'package:silverliningspodcasts/src/helpers/reflector.dart';
+import 'package:silverliningspodcasts/src/models/user.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DbProvider {

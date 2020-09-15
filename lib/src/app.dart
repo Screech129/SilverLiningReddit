@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sparkitecture/src/helpers/constants.dart';
-import 'package:sparkitecture/src/pages/home.dart';
-import 'package:sparkitecture/src/pages/login.dart';
+import 'package:silverliningspodcasts/src/helpers/constants.dart';
+import 'package:silverliningspodcasts/src/pages/home.dart';
+import 'package:silverliningspodcasts/src/pages/login.dart';
 
 import 'blocs/authentication_bloc.dart';
 import 'blocs/theme_cubit.dart';
@@ -21,7 +21,7 @@ class App extends StatelessWidget {
       child: BlocBuilder<ThemeCubit, ThemeData>(
         builder: (context, state) {
           return MaterialApp(
-            title: 'Sparkitecture',
+            title: 'silverliningspodcasts',
             theme: state,
             onGenerateRoute: _buildRoutes,
           );
