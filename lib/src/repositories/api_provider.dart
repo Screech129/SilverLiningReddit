@@ -1,9 +1,11 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
+import 'package:silverliningspodcasts/src/dtos/auth_response_dto.dart';
 import 'package:silverliningspodcasts/src/helpers/constants.dart';
 import 'package:silverliningspodcasts/src/helpers/secure_storage.dart';
 import 'package:silverliningspodcasts/src/models/user.dart';
+import 'package:uuid/uuid.dart';
 
 class ApiProvider {
   Client _client = Client();
@@ -38,46 +40,26 @@ class ApiProvider {
     }
   }
 
-  Future<User> login(String userName, String password) async {
-    Response response;
-    try {
-      var command = NetworkConstants.login;
-      var requestBody = _buildRequestBody(
-        command,
-        {"Username": userName, "Password": password, "ServiceToken": ""},
-      );
-      var baseUrl = NetworkConstants.baseUrl;
+  Future<AuthResponseDto> getAccessToken(String authToken) async {
+    var encodedSecrets = utf8.encode(
+        "${NetworkConstants.clientIdRaw}:${NetworkConstants.clientSecret}");
+    var rawBody = {
+      "grant_type": "authorization_code",
+      "code": "#$authToken",
+      "redirect_uri": NetworkConstants.redirectUriRaw
+    };
+    //var bodyJson = json.encode(rawBody);
 
-      response = await _client.post(
-        '$baseUrl/$command',
-        body: requestBody,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      );
-      var succeeded = await json.decode(response.body)['Succeeded'];
-      if (succeeded) {
-        var cookieHeader = response.headers['set-cookie'];
-        secureStorage.storage
-            .write(key: StorageKeyConstants.cookies, value: cookieHeader);
-
-        var xsrfToken = cookieHeader
-            .split("XSRF-TOKEN=")[1]
-            .split(';')[0]
-            .replaceAll('%2F', '/');
-        secureStorage.storage
-            .write(key: StorageKeyConstants.xsrfToken, value: xsrfToken);
-        var user =
-            User.fromJson(json.decode(response.body)['Payload']['UserInfo']);
-        return user;
-      } else {
-        print(await json.decode(response.body));
-        return null;
-      }
-    } catch (e) {
-      print(e);
-      throw Exception(e);
-    }
+    var response = await _client.post(
+      NetworkConstants.accountUrl,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Basic ${base64Encode(encodedSecrets)}"
+      },
+      body: rawBody,
+      encoding: Encoding.getByName("utf-8"),
+    );
+    var temp = response;
   }
 
   Future<Map<String, dynamic>> _executeCommand(

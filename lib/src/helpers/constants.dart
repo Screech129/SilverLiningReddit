@@ -12,6 +12,9 @@ class StorageKeyConstants {
   static const String userName = 'userName';
   static const String password = 'password';
   static const String xsrfToken = 'xsrfToken';
+  static const String authToken = 'auth_token';
+  static const String accessToken = 'access_token';
+  static const String expiresIn = 'expires_in';
   static const String cookies = 'cookies';
 }
 
@@ -25,10 +28,17 @@ class ErrorConstants {
 class NetworkConstants {
   static const String baseUrl =
       'http://33a5abfa3cad.ngrok.io/ExecuteCommand'; //Change depending on environment and ngrok
+  static const String authCodeUrl = 'https://accounts.spotify.com/authorize?';
+  static const String accountUrl = 'https://accounts.spotify.com/api/token';
+  static const String responseType = 'response_type=code';
   static const String login = 'Login';
-  static const String clientId = "{}";
-  static const String clientSecret = "{}";
-  static const String redirectUri = "{}";
+  static const String clientId = "client_id=66722578aea546a5aaf1f19b6f81cc36";
+  static const String clientIdRaw = "66722578aea546a5aaf1f19b6f81cc36";
+  static const String clientSecret = "12ed5e7a3fb74b5c9b60e52f0547f05c";
+  static const String redirectUri =
+      "redirect_uri=http://localhost:8888/callback";
+  static const String redirectUriRaw = "http://localhost:8888/callback";
+  static const String scopes = 'scope=user-read-private user-read-email';
 }
 
 class WidgetConstants {

@@ -34,25 +34,20 @@ class App extends StatelessWidget {
 Route _buildRoutes(RouteSettings settings) {
   switch (settings.name) {
     case NavigationConstants.home:
-      // return MaterialPageRoute(
-      //   builder: (BuildContext context) {
-      //     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
-      //       builder: (context, state) {
-      //         if (state is Authenticated) {
-      //           return Home();
-      //         }
-      //         if (state is NotAuthenticated) {
-      //           return Login();
-      //         } else {
-      //           return Login();
-      //         }
-      //       },
-      //     );
-      //   },
-      // );
       return MaterialPageRoute(
         builder: (BuildContext context) {
-          return Home();
+          return BlocBuilder<AuthenticationBloc, AuthenticationState>(
+            builder: (context, state) {
+              if (state is Authenticated) {
+                return Home();
+              }
+              if (state is NotAuthenticated) {
+                return Login();
+              } else {
+                return Login();
+              }
+            },
+          );
         },
       );
       break;

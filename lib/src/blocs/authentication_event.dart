@@ -5,9 +5,9 @@ abstract class AuthenticationEvent {}
 
 class AppStarted extends AuthenticationEvent {}
 
-class LoginButtonPressed extends AuthenticationEvent {
-  final AuthInfoDto authInfo;
-  LoginButtonPressed(this.authInfo);
+class GetAccessToken extends AuthenticationEvent {
+  final String authToken;
+  GetAccessToken(this.authToken);
 }
 
 class UseBiometricsSwitched extends AuthenticationEvent {
