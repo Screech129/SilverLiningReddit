@@ -1,5 +1,5 @@
-name: silverliningspodcasts
-description: Podcast app side project
+name: silverliningsreddit
+description: Reddit app side project
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.

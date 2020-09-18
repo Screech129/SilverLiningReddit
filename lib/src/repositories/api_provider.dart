@@ -1,35 +1,24 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
-import 'package:silverliningspodcasts/src/dtos/auth_response_dto.dart';
-import 'package:silverliningspodcasts/src/helpers/constants.dart';
-import 'package:silverliningspodcasts/src/helpers/secure_storage.dart';
-import 'package:silverliningspodcasts/src/models/user.dart';
-import 'package:uuid/uuid.dart';
+import 'package:silverliningsreddit/src/dtos/auth_response_dto.dart';
+import 'package:silverliningsreddit/src/helpers/constants.dart';
+import 'package:silverliningsreddit/src/models/subreddit.dart';
+import 'package:silverliningsreddit/src/repositories/repository.dart';
 
 class ApiProvider {
   Client _client = Client();
 
-//EXAMPLE CALL
-  Future<List<User>> getUser(
-    String commandName,
-    Object critieria,
-  ) async {
+  Future<List<Subreddit>> getSubscribedSubreddits() async {
+    List<Subreddit> subreddits = List<Subreddit>();
     try {
-      final userSearchList = List<User>();
+      final response = await _executeCommand('/subreddits/mine/subscriber');
 
-      final response = await _executeCommand(commandName, critieria);
-
-      if (response['errors'] == null) {
-        var participantList = response['Participant'];
-        participantList.forEach(
-          (item) => {
-            userSearchList.add(
-              User.fromJson(item),
-            ),
-          },
-        );
-        return userSearchList;
+      if (response != null) {
+        response.forEach((value) {
+          subreddits.add(Subreddit.fromJson(value['data']));
+        });
+        return subreddits;
       } else {
         print(response);
         return null;
@@ -41,17 +30,15 @@ class ApiProvider {
   }
 
   Future<AuthResponseDto> getAccessToken(String authToken) async {
-    var encodedSecrets = utf8.encode(
-        "${NetworkConstants.clientIdRaw}:${NetworkConstants.clientSecret}");
+    var encodedSecrets = utf8.encode("${NetworkConstants.clientIdRaw}:''");
     var rawBody = {
       "grant_type": "authorization_code",
-      "code": "#$authToken",
+      "code": "$authToken",
       "redirect_uri": NetworkConstants.redirectUriRaw
     };
-    //var bodyJson = json.encode(rawBody);
 
     var response = await _client.post(
-      NetworkConstants.accountUrl,
+      NetworkConstants.tokenUrl,
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
         "Authorization": "Basic ${base64Encode(encodedSecrets)}"
@@ -59,47 +46,48 @@ class ApiProvider {
       body: rawBody,
       encoding: Encoding.getByName("utf-8"),
     );
-    var temp = response;
+    return AuthResponseDto.fromJson(json.decode(response.body));
   }
 
-  Future<Map<String, dynamic>> _executeCommand(
-      commandName, Object requestbody) async {
+  Future<AuthResponseDto> refreshAccessToken(String refreshToken) async {
+    var encodedSecrets = utf8.encode("${NetworkConstants.clientIdRaw}:''");
+    var rawBody = {
+      "grant_type": "refresh_token",
+      "refresh_token": "$refreshToken"
+    };
+
     var response = await _client.post(
-      '${NetworkConstants.baseUrl}/$commandName',
+      NetworkConstants.tokenUrl,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Basic ${base64Encode(encodedSecrets)}"
+      },
+      body: rawBody,
+      encoding: Encoding.getByName("utf-8"),
+    );
+    return AuthResponseDto.fromJson(json.decode(response.body));
+  }
+
+  Future<List<dynamic>> _executeCommand(commandName) async {
+    var response = await _client.get(
+      '${NetworkConstants.baseUrl}$commandName',
       headers: await _buildHeaders(),
-      body: _buildRequestBody(commandName, requestbody),
     );
 
-    var succeeded = await json.decode(response.body)['Succeeded'];
+    var succeeded = await json.decode(response.body)['data'] != null;
     if (succeeded) {
-      var payload = await json.decode(response.body)["Payload"];
+      var payload = await json.decode(response.body)['data']['children'];
       return payload;
     } else {
       print(response.body);
-      return {"errors": await json.decode(response.body)['ValidationResults']};
+      return null;
     }
   }
 
-  String _buildRequestBody(String commandName, Object payload) {
-    return json.encode(
-      {
-        "CommandName": "$commandName",
-        "PayLoadAsJson": payload == null ? '{}' : json.encode(payload),
-        "TimeZoneOffsetFromGMT": 0
-      },
-    );
-  }
-
   Future<Map<String, String>> _buildHeaders() async {
-    final cookie = await secureStorage.storage.read(key: 'cookies');
-    final token = await secureStorage.storage.read(key: 'xsrfToken');
+    var token = await repository.getToken();
     Map<String, String> headers = Map<String, String>();
-
-    headers = <String, String>{
-      "cookie": cookie,
-      "Content-Type": "application/json",
-      "X-XSRF-TOKEN": token,
-    };
+    headers = <String, String>{"Authorization": "bearer $token"};
 
     return headers;
   }

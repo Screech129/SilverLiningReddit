@@ -3,14 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_auth/local_auth.dart';
 // ignore: unused_import
 import 'package:reflectable/reflectable.dart';
-import 'package:silverliningspodcasts/src/app.dart';
-import 'package:silverliningspodcasts/src/blocs/authentication_bloc.dart';
-import 'package:silverliningspodcasts/src/dtos/auth_info_dto.dart';
-import 'package:silverliningspodcasts/src/helpers/secure_storage.dart';
-import 'package:silverliningspodcasts/src/repositories/db_provider.dart';
+import 'package:silverliningsreddit/src/app.dart';
+import 'package:silverliningsreddit/src/blocs/authentication_bloc.dart';
+import 'package:silverliningsreddit/src/dtos/auth_info_dto.dart';
+import 'package:silverliningsreddit/src/helpers/secure_storage.dart';
+import 'package:silverliningsreddit/src/repositories/db_provider.dart';
 import 'main.reflectable.dart';
 
-import 'package:silverliningspodcasts/src/helpers/constants.dart';
+import 'package:silverliningsreddit/src/helpers/constants.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:silverliningspodcasts/src/helpers/reflector.dart';
+import 'package:silverliningsreddit/src/helpers/reflector.dart';
 
 part 'auth_response_dto.g.dart';
 
@@ -7,10 +7,10 @@ part 'auth_response_dto.g.dart';
 @JsonSerializable()
 class AuthResponseDto {
   String accessToken;
-  String expiresIn;
-  String state;
+  int expiresIn;
+  String refreshToken;
 
-  AuthResponseDto({this.accessToken, this.expiresIn, this.state});
+  AuthResponseDto({this.accessToken, this.expiresIn, this.refreshToken});
 
   factory AuthResponseDto.fromJson(json) => _$AuthResponseDtoFromJson(json);
   Map<String, dynamic> toJson() => _$AuthResponseDtoToJson(this);

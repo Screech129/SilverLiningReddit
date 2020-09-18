@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:silverliningspodcasts/src/blocs/authentication_bloc.dart';
-import 'package:silverliningspodcasts/src/helpers/constants.dart';
-import 'package:silverliningspodcasts/src/helpers/secure_storage.dart';
-import 'package:silverliningspodcasts/src/widgets/styled_scaffold.dart';
+import 'package:silverliningsreddit/src/blocs/authentication_bloc.dart';
+import 'package:silverliningsreddit/src/helpers/constants.dart';
+import 'package:silverliningsreddit/src/helpers/secure_storage.dart';
+import 'package:silverliningsreddit/src/widgets/styled_scaffold.dart';
 import 'package:uuid/uuid.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -23,19 +23,20 @@ class Login extends StatelessWidget {
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
       builder: (context, state) {
         if (state is NotAuthenticated) {
-          var stateGuid = Uuid();
+          var stateGuid = Uuid().v4();
           var fullAuthUrl = Uri.encodeFull(
-              '${NetworkConstants.authCodeUrl}${NetworkConstants.clientId}&${NetworkConstants.redirectUri}&${NetworkConstants.scopes}&response_type=token&state=$stateGuid');
+              '${NetworkConstants.authCodeUrl}${NetworkConstants.clientId}&${NetworkConstants.redirectUri}&${NetworkConstants.scopes}&duration=permanent&response_type=code&state=$stateGuid');
 
           return WebView(
             initialUrl: fullAuthUrl,
             javascriptMode: JavascriptMode.unrestricted,
             onPageFinished: (url) {
-              if (url.contains(StorageKeyConstants.accessToken)) {
+              if (url.contains('${StorageKeyConstants.accessToken}=') &&
+                  url.contains('callback')) {
                 var queryParams = Uri.splitQueryString(url);
                 String authToken;
                 queryParams.forEach((key, value) {
-                  if (key == 'state' && value != stateGuid.toString()) {
+                  if (key.contains('state') && value != stateGuid.toString()) {
                     return;
                   }
 
@@ -43,14 +44,6 @@ class Login extends StatelessWidget {
                     authToken = value;
                     secureStorage.storage.write(
                         key: StorageKeyConstants.authToken, value: value);
-                  }
-
-                  if (key == StorageKeyConstants.expiresIn) {
-                    secureStorage.storage.write(
-                        key: StorageKeyConstants.expiresIn,
-                        value: DateTime.now()
-                            .add(Duration(seconds: int.parse(value)))
-                            .toString());
                   }
                 });
 

@@ -1,7 +1,8 @@
-import 'package:silverliningspodcasts/src/dtos/auth_response_dto.dart';
-import 'package:silverliningspodcasts/src/helpers/constants.dart';
-import 'package:silverliningspodcasts/src/helpers/secure_storage.dart';
-import 'package:silverliningspodcasts/src/repositories/api_provider.dart';
+import 'package:silverliningsreddit/src/dtos/auth_response_dto.dart';
+import 'package:silverliningsreddit/src/helpers/constants.dart';
+import 'package:silverliningsreddit/src/helpers/secure_storage.dart';
+import 'package:silverliningsreddit/src/models/subreddit.dart';
+import 'package:silverliningsreddit/src/repositories/api_provider.dart';
 
 class Repository {
   ApiProvider _apiProvider = ApiProvider();
@@ -9,6 +10,12 @@ class Repository {
   Future<String> getToken() async {
     var token =
         await secureStorage.storage.read(key: StorageKeyConstants.accessToken);
+    return token;
+  }
+
+  Future<String> getRefreshToken() async {
+    var token =
+        await secureStorage.storage.read(key: StorageKeyConstants.refreshToken);
     return token;
   }
 
@@ -22,8 +29,16 @@ class Repository {
     return await _apiProvider.getAccessToken(authToken);
   }
 
+  Future<AuthResponseDto> refreshAccessToken(String refreshToken) async {
+    return await _apiProvider.refreshAccessToken(refreshToken);
+  }
+
   void logout() async {
     await secureStorage.storage.delete(key: StorageKeyConstants.xsrfToken);
+  }
+
+  Future<List<Subreddit>> getSubreddits() async {
+    return await _apiProvider.getSubscribedSubreddits();
   }
 
   //Future<Podcast> searchPodcasts(String criteria) {}

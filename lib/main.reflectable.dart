@@ -3,11 +3,10 @@
 
 import 'dart:core';
 import 'package:json_annotation/src/json_serializable.dart' as prefix3;
-import 'package:silverliningspodcasts/src/dtos/auth_response_dto.dart'
-    as prefix2;
-import 'package:silverliningspodcasts/src/helpers/ignore.dart' as prefix4;
-import 'package:silverliningspodcasts/src/helpers/reflector.dart' as prefix0;
-import 'package:silverliningspodcasts/src/models/user.dart' as prefix1;
+import 'package:silverliningsreddit/src/dtos/auth_response_dto.dart' as prefix2;
+import 'package:silverliningsreddit/src/helpers/ignore.dart' as prefix4;
+import 'package:silverliningsreddit/src/helpers/reflector.dart' as prefix0;
+import 'package:silverliningsreddit/src/models/user.dart' as prefix1;
 
 // ignore_for_file: prefer_adjacent_string_concatenation
 // ignore_for_file: prefer_collection_literals
@@ -63,11 +62,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
             {},
             {},
             {
-              r'': (b) => ({accessToken, expiresIn, state}) => b
+              r'': (b) => ({accessToken, expiresIn, refreshToken}) => b
                   ? prefix2.AuthResponseDto(
                       accessToken: accessToken,
                       expiresIn: expiresIn,
-                      state: state)
+                      refreshToken: refreshToken)
                   : null,
               r'fromJson': (b) =>
                   (json) => b ? prefix2.AuthResponseDto.fromJson(json) : null
@@ -94,9 +93,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.VariableMirrorImpl(r'accessToken', 32773, 1,
             const prefix0.Reflector(), -1, 3, 3, const <int>[], const []),
         r.VariableMirrorImpl(r'expiresIn', 32773, 1, const prefix0.Reflector(),
-            -1, 3, 3, const <int>[], const []),
-        r.VariableMirrorImpl(r'state', 32773, 1, const prefix0.Reflector(), -1,
-            3, 3, const <int>[], const []),
+            -1, 2, 2, const <int>[], const []),
+        r.VariableMirrorImpl(r'refreshToken', 32773, 1,
+            const prefix0.Reflector(), -1, 3, 3, const <int>[], const []),
         r.MethodMirrorImpl(r'toJson', 4325378, 0, -1, 4, 5, null, const <int>[],
             const prefix0.Reflector(), const <Object>[prefix4.ignore]),
         r.ImplicitGetterMirrorImpl(const prefix0.Reflector(), 0, 10),
@@ -198,14 +197,24 @@ final _data = <r.Reflectable, r.ReflectorData>{
             30,
             const prefix0.Reflector(),
             -1,
+            2,
+            2,
+            const <int>[],
+            const [],
+            null,
+            #expiresIn),
+        r.ParameterMirrorImpl(
+            r'refreshToken',
+            45062,
+            30,
+            const prefix0.Reflector(),
+            -1,
             3,
             3,
             const <int>[],
             const [],
             null,
-            #expiresIn),
-        r.ParameterMirrorImpl(r'state', 45062, 30, const prefix0.Reflector(),
-            -1, 3, 3, const <int>[], const [], null, #state),
+            #refreshToken),
         r.ParameterMirrorImpl(r'json', 16390, 31, const prefix0.Reflector(),
             null, null, null, const <int>[], const [], null, null),
         r.ParameterMirrorImpl(
@@ -226,14 +235,24 @@ final _data = <r.Reflectable, r.ReflectorData>{
             27,
             const prefix0.Reflector(),
             -1,
+            2,
+            2,
+            const <int>[],
+            const [],
+            null,
+            null),
+        r.ParameterMirrorImpl(
+            r'_refreshToken',
+            32870,
+            29,
+            const prefix0.Reflector(),
+            -1,
             3,
             3,
             const <int>[],
             const [],
             null,
-            null),
-        r.ParameterMirrorImpl(r'_state', 32870, 29, const prefix0.Reflector(),
-            -1, 3, 3, const <int>[], const [], null, null)
+            null)
       ],
       <Type>[
         prefix1.User,
@@ -263,13 +282,14 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r'email': (dynamic instance) => instance.email,
         r'accessToken': (dynamic instance) => instance.accessToken,
         r'expiresIn': (dynamic instance) => instance.expiresIn,
-        r'state': (dynamic instance) => instance.state
+        r'refreshToken': (dynamic instance) => instance.refreshToken
       },
       {
         r'accessToken=': (dynamic instance, value) =>
             instance.accessToken = value,
         r'expiresIn=': (dynamic instance, value) => instance.expiresIn = value,
-        r'state=': (dynamic instance, value) => instance.state = value
+        r'refreshToken=': (dynamic instance, value) =>
+            instance.refreshToken = value
       },
       <m.LibraryMirror>[
         r.LibraryMirrorImpl(r'', Uri.parse(r'reflectable://0/'),
