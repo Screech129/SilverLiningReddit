@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:silverliningsreddit/src/models/preview.dart';
+import 'package:silverliningsreddit/src/models/models.dart';
 
 part 'post.g.dart';
 

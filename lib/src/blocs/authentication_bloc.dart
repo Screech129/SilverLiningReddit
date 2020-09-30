@@ -2,10 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:silverliningsreddit/src/dtos/auth_info_dto.dart';
-import 'package:silverliningsreddit/src/dtos/auth_response_dto.dart';
-import 'package:silverliningsreddit/src/helpers/constants.dart';
-import 'package:silverliningsreddit/src/helpers/secure_storage.dart';
+import 'package:silverliningsreddit/src/dtos/dtos.dart';
+import 'package:silverliningsreddit/src/helpers/helpers.dart';
 import 'package:silverliningsreddit/src/repositories/repository.dart';
 
 part 'authentication_event.dart';
@@ -13,19 +11,22 @@ part 'authentication_state.dart';
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
-  AuthenticationBloc(AuthenticationState initialState) : super(initialState);
+  AuthenticationBloc(AuthenticationState initialState, this._repository)
+      : super(initialState);
+
+  final Repository _repository;
 
   @override
   Stream<AuthenticationState> mapEventToState(
     AuthenticationEvent event,
   ) async* {
     if (event is AppStarted) {
-      final String token = await repository.getToken();
-      final String tokenExpiration = await repository.getTokenExpiration();
+      final String token = await _repository.getToken();
+      final String tokenExpiration = await _repository.getTokenExpiration();
       if (token != null) {
         if (DateTime.parse(tokenExpiration).isBefore(DateTime.now())) {
-          final String refreshToken = await repository.getRefreshToken();
-          var response = await repository.refreshAccessToken(refreshToken);
+          final String refreshToken = await _repository.getRefreshToken();
+          var response = await _repository.refreshAccessToken(refreshToken);
           _saveTokenInfo(response, secureStorage);
         }
         yield AuthenticatedState(null);
@@ -35,7 +36,7 @@ class AuthenticationBloc
     }
 
     if (event is GetAccessToken) {
-      var response = await repository.getAccessToken(event.authToken);
+      var response = await _repository.getAccessToken(event.authToken);
       _saveTokenInfo(response, secureStorage);
       secureStorage.storage.write(
           key: StorageKeyConstants.refreshToken, value: response.refreshToken);
@@ -43,7 +44,7 @@ class AuthenticationBloc
 
     if (event is LogOutButtonPressedEvent) {
       yield PendingAuthenticationState(null);
-      repository.logout();
+      _repository.logout();
       yield NotAuthenticatedState(null);
     }
   }

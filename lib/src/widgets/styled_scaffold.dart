@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:silverliningsreddit/src/blocs/subscribed_subreddits_bloc.dart';
-import 'package:silverliningsreddit/src/models/subreddit.dart';
+import 'package:silverliningsreddit/src/models/models.dart';
+import 'package:silverliningsreddit/src/repositories/repository.dart';
 import 'package:silverliningsreddit/src/widgets/navigation_drawer.dart';
 
 class StyledScaffold extends StatelessWidget {
   final String pageTtile;
   final Widget body;
   final bool showAppDrawer;
-  StyledScaffold(this.pageTtile, this.body, {this.showAppDrawer = true});
+  final BuildContext context;
+  StyledScaffold(this.pageTtile, this.body, this.context,
+      {this.showAppDrawer = true});
   @override
   Widget build(BuildContext context) {
     List<Subreddit> subs;
 
     return BlocProvider(
-      create: (context) => SubscribedSubredditsBloc(),
+      create: (context) =>
+          SubscribedSubredditsBloc(context.repository<Repository>()),
       child: BlocBuilder<SubscribedSubredditsBloc, SubscribedSubredditsState>(
         builder: (context, state) {
           if (state is SubscribedSubredditsInitialState) {

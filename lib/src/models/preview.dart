@@ -1,12 +1,12 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import 'image.dart';
+import 'post_image.dart';
 
 part 'preview.g.dart';
 
 @JsonSerializable()
 class Preview {
-  List<Image> images;
+  List<PostImage> images;
 
   Preview();
 

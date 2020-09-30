@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:silverliningsreddit/src/helpers/reflector.dart';
+import 'package:silverliningsreddit/src/helpers/helpers.dart';
 
 part 'auth_response_dto.g.dart';
 

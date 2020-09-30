@@ -4,17 +4,16 @@ import 'package:local_auth/local_auth.dart';
 // ignore: unused_import
 import 'package:reflectable/reflectable.dart';
 import 'package:silverliningsreddit/src/app.dart';
-import 'package:silverliningsreddit/src/blocs/authentication_bloc.dart';
-import 'package:silverliningsreddit/src/dtos/auth_info_dto.dart';
-import 'package:silverliningsreddit/src/helpers/secure_storage.dart';
+import 'package:silverliningsreddit/src/blocs/blocs.dart';
+import 'package:silverliningsreddit/src/dtos/dtos.dart';
+import 'package:silverliningsreddit/src/helpers/helpers.dart';
 import 'package:silverliningsreddit/src/repositories/db_provider.dart';
+import 'package:silverliningsreddit/src/repositories/repository.dart';
 import 'main.reflectable.dart';
-
-import 'package:silverliningsreddit/src/helpers/constants.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  Repository _repository = Repository();
   initializeReflectable();
 
   await dbProvider.init();
@@ -41,10 +40,10 @@ void main() async {
     BlocProvider<AuthenticationBloc>(
       create: (context) {
         return AuthenticationBloc(
-            AuthenticationInitialState(hasBiometrics, _authInfo))
+            AuthenticationInitialState(hasBiometrics, _authInfo), _repository)
           ..add(AppStarted());
       },
-      child: App(),
+      child: App(_repository),
     ),
   );
 }

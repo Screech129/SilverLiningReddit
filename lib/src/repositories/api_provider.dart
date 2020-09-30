@@ -1,19 +1,18 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
-import 'package:silverliningsreddit/src/dtos/auth_response_dto.dart';
-import 'package:silverliningsreddit/src/helpers/constants.dart';
-import 'package:silverliningsreddit/src/models/post.dart';
-import 'package:silverliningsreddit/src/models/subreddit.dart';
-import 'package:silverliningsreddit/src/repositories/repository.dart';
+import 'package:silverliningsreddit/src/dtos/dtos.dart';
+import 'package:silverliningsreddit/src/helpers/helpers.dart';
+import 'package:silverliningsreddit/src/models/models.dart';
 
 class ApiProvider {
   Client _client = Client();
 
-  Future<List<Subreddit>> getSubscribedSubreddits() async {
+  Future<List<Subreddit>> getSubscribedSubreddits(String token) async {
     List<Subreddit> subreddits = List<Subreddit>();
     try {
-      final response = await _executeCommand(UrlConstants.subscribedSubs);
+      final response =
+          await _executeCommand(UrlConstants.subscribedSubs, token);
 
       if (response != null) {
         response.forEach((value) {
@@ -30,10 +29,10 @@ class ApiProvider {
     }
   }
 
-  Future<List<Post>> getFrontPage() async {
+  Future<List<Post>> getFrontPage(String token) async {
     List<Post> subreddits = List<Post>();
     try {
-      final response = await _executeCommand('');
+      final response = await _executeCommand('', token);
 
       if (response != null) {
         response.forEach((value) {
@@ -89,10 +88,10 @@ class ApiProvider {
     return AuthResponseDto.fromJson(json.decode(response.body));
   }
 
-  Future<List<dynamic>> _executeCommand(commandName) async {
+  Future<List<dynamic>> _executeCommand(commandName, String token) async {
     var response = await _client.get(
       '${NetworkConstants.baseUrl}$commandName?raw_json=1',
-      headers: await _buildHeaders(),
+      headers: await _buildHeaders(token),
     );
 
     var succeeded = await json.decode(response.body)['data'] != null;
@@ -105,8 +104,7 @@ class ApiProvider {
     }
   }
 
-  Future<Map<String, String>> _buildHeaders() async {
-    var token = await repository.getToken();
+  Future<Map<String, String>> _buildHeaders(String token) async {
     Map<String, String> headers = Map<String, String>();
     headers = <String, String>{"Authorization": "bearer $token"};
 

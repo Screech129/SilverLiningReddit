@@ -1,16 +1,16 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:silverliningsreddit/src/models/source.dart';
+import 'package:silverliningsreddit/src/models/models.dart';
 
 part 'image.g.dart';
 
 @JsonSerializable()
-class Image {
+class PostImage {
   Source source;
   List<Source> resolutions;
   String id;
 
-  Image();
+  PostImage();
 
-  factory Image.fromJson(json) => _$ImageFromJson(json);
+  factory PostImage.fromJson(json) => _$ImageFromJson(json);
   Map<String, dynamic> toJson() => _$ImageToJson(this);
 }

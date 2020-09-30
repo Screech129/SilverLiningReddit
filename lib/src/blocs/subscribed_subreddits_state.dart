@@ -9,10 +9,12 @@ abstract class SubscribedSubredditsState extends Equatable {
 
 class SubscribedSubredditsInitialState extends SubscribedSubredditsState {}
 
-class SubredditsLoadingState extends SubscribedSubredditsState {}
+class SubscribedSubredditsLoadingState extends SubscribedSubredditsState {}
 
 class SubscribedSubredditsLoadedState extends SubscribedSubredditsState {
   final List<Subreddit> subreddits;
 
   SubscribedSubredditsLoadedState(this.subreddits);
 }
+
+class SubscribedSubredditsFaieldState extends SubscribedSubredditsState {}

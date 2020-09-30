@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:silverliningsreddit/src/models/subreddit.dart';
+import 'package:silverliningsreddit/src/models/models.dart';
 
 class NavigationDrawer extends StatelessWidget {
   final List<Subreddit> subs;

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:silverliningsreddit/src/blocs/front_page_bloc.dart';
-import 'package:silverliningsreddit/src/helpers/constants.dart';
-import 'package:silverliningsreddit/src/models/post.dart';
+import 'package:silverliningsreddit/src/blocs/blocs.dart';
+
+import 'package:silverliningsreddit/src/helpers/helpers.dart';
+import 'package:silverliningsreddit/src/models/models.dart';
 import 'package:silverliningsreddit/src/widgets/styled_scaffold.dart';
 
 class Home extends StatelessWidget {
@@ -10,7 +11,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StyledScaffold("Home", _buildBody(context));
+    return StyledScaffold("Home", _buildBody(context), context);
   }
 
   _buildBody(BuildContext context) {

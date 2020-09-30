@@ -1,6 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:silverliningsreddit/src/helpers/ignore.dart';
-import 'package:silverliningsreddit/src/helpers/reflector.dart';
+import 'package:silverliningsreddit/src/helpers/helpers.dart';
 
 part 'user.g.dart';
 

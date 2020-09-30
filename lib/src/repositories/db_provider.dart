@@ -1,6 +1,6 @@
 import 'package:reflectable/reflectable.dart';
-import 'package:silverliningsreddit/src/helpers/reflector.dart';
-import 'package:silverliningsreddit/src/models/user.dart';
+import 'package:silverliningsreddit/src/helpers/helpers.dart';
+import 'package:silverliningsreddit/src/models/models.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DbProvider {

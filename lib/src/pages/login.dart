@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:silverliningsreddit/src/blocs/authentication_bloc.dart';
-import 'package:silverliningsreddit/src/helpers/constants.dart';
-import 'package:silverliningsreddit/src/helpers/secure_storage.dart';
+import 'package:silverliningsreddit/src/blocs/blocs.dart';
+import 'package:silverliningsreddit/src/helpers/helpers.dart';
 import 'package:silverliningsreddit/src/widgets/styled_scaffold.dart';
 import 'package:uuid/uuid.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -15,6 +14,7 @@ class Login extends StatelessWidget {
     return StyledScaffold(
       PageTitleConstants.login,
       _buildBody(context),
+      context,
       showAppDrawer: false,
     );
   }

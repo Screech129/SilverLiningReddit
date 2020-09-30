@@ -1,23 +1,38 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:silverliningsreddit/src/blocs/subscribed_subreddits_bloc.dart';
+import 'package:mockito/mockito.dart';
+import 'package:silverliningsreddit/src/blocs/blocs.dart';
 
 import 'package:bloc_test/bloc_test.dart';
+import 'package:silverliningsreddit/src/repositories/repository.dart';
+
+class MockRepository extends Mock implements Repository {}
 
 void main() {
   group('subcribedSubredditsBloc', () {
     SubscribedSubredditsBloc subredditsBloc;
+    Repository repository;
 
     setUp(() {
-      WidgetsFlutterBinding.ensureInitialized();
-      subredditsBloc = SubscribedSubredditsBloc();
+      repository = MockRepository();
+      subredditsBloc = SubscribedSubredditsBloc(repository);
     });
 
     blocTest(
-      'Contains Data',
-      build: () => subredditsBloc,
+      'Faield state returned if getting subscribed subs fails',
+      build: () {
+        when(repository.getSubscribedSubreddits())
+            .thenThrow(Exception('failure'));
+        return subredditsBloc;
+      },
       act: (bloc) => bloc.add(LoadSubscribedSubredditsEvent()),
-      expect: [],
+      expect: <SubscribedSubredditsState>[
+        SubscribedSubredditsLoadingState(),
+        SubscribedSubredditsFaieldState()
+      ],
     );
+
+    tearDown(() {
+      subredditsBloc.close();
+    });
   });
 }

@@ -9,7 +9,7 @@ part of 'preview.dart';
 Preview _$PreviewFromJson(Map<String, dynamic> json) {
   return Preview()
     ..images = (json['images'] as List)
-        ?.map((e) => e == null ? null : Image.fromJson(e))
+        ?.map((e) => e == null ? null : PostImage.fromJson(e))
         ?.toList();
 }
 

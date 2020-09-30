@@ -1,8 +1,6 @@
-import 'package:silverliningsreddit/src/dtos/auth_response_dto.dart';
-import 'package:silverliningsreddit/src/helpers/constants.dart';
-import 'package:silverliningsreddit/src/helpers/secure_storage.dart';
-import 'package:silverliningsreddit/src/models/post.dart';
-import 'package:silverliningsreddit/src/models/subreddit.dart';
+import 'package:silverliningsreddit/src/dtos/dtos.dart';
+import 'package:silverliningsreddit/src/helpers/helpers.dart';
+import 'package:silverliningsreddit/src/models/models.dart';
 import 'package:silverliningsreddit/src/repositories/api_provider.dart';
 
 class Repository {
@@ -39,12 +37,12 @@ class Repository {
   }
 
   Future<List<Subreddit>> getSubscribedSubreddits() async {
-    return await _apiProvider.getSubscribedSubreddits();
+    var token = await getToken();
+    return await _apiProvider.getSubscribedSubreddits(token);
   }
 
   Future<List<Post>> getFrontPage() async {
-    return await _apiProvider.getFrontPage();
+    var token = await getToken();
+    return await _apiProvider.getFrontPage(token);
   }
 }
-
-Repository repository = Repository();
