@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:silverliningsreddit/src/blocs/blocs.dart';
+import 'package:silverliningsreddit/src/dtos/dtos.dart';
 
 import 'package:silverliningsreddit/src/helpers/helpers.dart';
 import 'package:silverliningsreddit/src/models/models.dart';
+import 'package:silverliningsreddit/src/repositories/repository.dart';
 import 'package:silverliningsreddit/src/widgets/styled_scaffold.dart';
 
 class Home extends StatelessWidget {
-  const Home({Key key}) : super(key: key);
-
+  const Home(this.repository, {Key key}) : super(key: key);
+  final Repository repository;
   @override
   Widget build(BuildContext context) {
-    return StyledScaffold("Home", _buildBody(context), context);
+    return StyledScaffold("Home", _buildBody(context), repository);
   }
 
   _buildBody(BuildContext context) {
@@ -24,7 +26,7 @@ class Home extends StatelessWidget {
           return ListView.builder(
               itemCount: state.posts.length,
               itemBuilder: (context, index) {
-                return _buildPostsItem(context, index, state.posts);
+                return _buildPostsItem(context, index, state.posts, repository);
               });
         }
         return Container();
@@ -32,11 +34,12 @@ class Home extends StatelessWidget {
     );
   }
 
-  Widget _buildPostsItem(BuildContext context, int index, List<Post> posts) {
+  Widget _buildPostsItem(BuildContext context, int index, List<Post> posts,
+      Repository repository) {
     return GestureDetector(
       onTap: () => {
         Navigator.pushNamed(context, NavigationConstants.post,
-            arguments: posts[index])
+            arguments: PostNavDto(posts[index].title, repository, posts[index]))
       },
       child: Card(
         elevation: 15,

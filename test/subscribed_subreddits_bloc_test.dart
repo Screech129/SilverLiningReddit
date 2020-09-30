@@ -3,6 +3,7 @@ import 'package:mockito/mockito.dart';
 import 'package:silverliningsreddit/src/blocs/blocs.dart';
 
 import 'package:bloc_test/bloc_test.dart';
+import 'package:silverliningsreddit/src/models/models.dart';
 import 'package:silverliningsreddit/src/repositories/repository.dart';
 
 class MockRepository extends Mock implements Repository {}
@@ -31,8 +32,14 @@ void main() {
       ],
     );
 
-    tearDown(() {
-      subredditsBloc.close();
-    });
+    blocTest(
+      'Returns loaded state if succesful',
+      build: () => subredditsBloc,
+      act: (bloc) => bloc.add(LoadSubscribedSubredditsEvent()),
+      expect: <SubscribedSubredditsState>[
+        SubscribedSubredditsLoadingState(),
+        SubscribedSubredditsLoadedState(List<Subreddit>())
+      ],
+    );
   });
 }

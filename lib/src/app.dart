@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:silverliningsreddit/src/pages/home.dart';
 import 'package:silverliningsreddit/src/pages/login.dart';
+import 'package:silverliningsreddit/src/pages/post.dart';
 import 'package:silverliningsreddit/src/repositories/repository.dart';
 
 import 'blocs/blocs.dart';
@@ -22,30 +23,28 @@ class App extends StatelessWidget {
           return MaterialApp(
             title: 'silverliningsreddit',
             theme: state,
-            routes: _buildRoutes(_repository),
+            routes: {
+              NavigationConstants.home: (context) {
+                return BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                  builder: (context, state) {
+                    if (state is AuthenticatedState) {
+                      return BlocProvider(
+                          create: (context) => FrontPageBloc(_repository),
+                          child: Home(_repository));
+                    }
+                    if (state is NotAuthenticatedState) {
+                      return Login();
+                    } else {
+                      return Login();
+                    }
+                  },
+                );
+              },
+              NavigationConstants.post: (context) => PostPage(),
+            },
           );
         },
       ),
     );
   }
-}
-
-_buildRoutes(Repository repository) {
-  return MaterialPageRoute(
-    builder: (BuildContext context) {
-      return BlocBuilder<AuthenticationBloc, AuthenticationState>(
-        builder: (context, state) {
-          if (state is AuthenticatedState) {
-            return BlocProvider(
-                create: (context) => FrontPageBloc(repository), child: Home());
-          }
-          if (state is NotAuthenticatedState) {
-            return Login();
-          } else {
-            return Login();
-          }
-        },
-      );
-    },
-  );
 }

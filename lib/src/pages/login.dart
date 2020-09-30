@@ -14,7 +14,7 @@ class Login extends StatelessWidget {
     return StyledScaffold(
       PageTitleConstants.login,
       _buildBody(context),
-      context,
+      null,
       showAppDrawer: false,
     );
   }

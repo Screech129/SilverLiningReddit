@@ -6,28 +6,30 @@ import 'package:silverliningsreddit/src/repositories/repository.dart';
 import 'package:silverliningsreddit/src/widgets/navigation_drawer.dart';
 
 class StyledScaffold extends StatelessWidget {
-  final String pageTtile;
+  final String pageTitle;
   final Widget body;
   final bool showAppDrawer;
-  final BuildContext context;
-  StyledScaffold(this.pageTtile, this.body, this.context,
+  final Repository repository;
+  StyledScaffold(this.pageTitle, this.body, this.repository,
       {this.showAppDrawer = true});
   @override
   Widget build(BuildContext context) {
     List<Subreddit> subs;
 
     return BlocProvider(
-      create: (context) =>
-          SubscribedSubredditsBloc(context.repository<Repository>()),
+      create: (context) => SubscribedSubredditsBloc(repository),
       child: BlocBuilder<SubscribedSubredditsBloc, SubscribedSubredditsState>(
         builder: (context, state) {
-          if (state is SubscribedSubredditsInitialState) {
-            BlocProvider.of<SubscribedSubredditsBloc>(context)
-                .add(LoadSubscribedSubredditsEvent());
+          if (showAppDrawer) {
+            if (state is SubscribedSubredditsInitialState) {
+              BlocProvider.of<SubscribedSubredditsBloc>(context)
+                  .add(LoadSubscribedSubredditsEvent());
+            }
+            if (state is SubscribedSubredditsLoadedState) {
+              subs = state.subreddits;
+            }
           }
-          if (state is SubscribedSubredditsLoadedState) {
-            subs = state.subreddits;
-          }
+
           return Scaffold(
             appBar: _buildAppbar(context),
             body: body,
@@ -40,7 +42,7 @@ class StyledScaffold extends StatelessWidget {
 
   _buildAppbar(BuildContext context) {
     return AppBar(
-      title: Text(pageTtile),
+      title: Text(pageTitle),
       centerTitle: true,
     );
   }
