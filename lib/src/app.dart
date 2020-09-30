@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:silverliningsreddit/src/blocs/subscribed_subreddits_bloc.dart';
+import 'package:silverliningsreddit/src/blocs/front_page_bloc.dart';
 import 'package:silverliningsreddit/src/helpers/constants.dart';
 import 'package:silverliningsreddit/src/pages/home.dart';
 import 'package:silverliningsreddit/src/pages/login.dart';
@@ -16,7 +16,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Bloc.observer = ThemeObserver();
+    Bloc.observer = AppBlocObserver();
     return BlocProvider(
       create: (_) => ThemeCubit(lightTheme),
       child: BlocBuilder<ThemeCubit, ThemeData>(
@@ -39,12 +39,11 @@ Route _buildRoutes(RouteSettings settings) {
         builder: (BuildContext context) {
           return BlocBuilder<AuthenticationBloc, AuthenticationState>(
             builder: (context, state) {
-              if (state is Authenticated) {
+              if (state is AuthenticatedState) {
                 return BlocProvider(
-                    create: (context) => SubscribedSubredditsBloc(),
-                    child: Home());
+                    create: (context) => FrontPageBloc(), child: Home());
               }
-              if (state is NotAuthenticated) {
+              if (state is NotAuthenticatedState) {
                 return Login();
               } else {
                 return Login();
@@ -58,7 +57,7 @@ Route _buildRoutes(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (BuildContext context) {
           return BlocProvider(
-              create: (context) => SubscribedSubredditsBloc(), child: Home());
+              create: (context) => FrontPageBloc(), child: Home());
         },
       );
       break;

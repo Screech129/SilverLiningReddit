@@ -10,9 +10,9 @@ class GetAccessToken extends AuthenticationEvent {
   GetAccessToken(this.authToken);
 }
 
-class UseBiometricsSwitched extends AuthenticationEvent {
+class UseBiometricsSwitchedEvent extends AuthenticationEvent {
   final AuthInfoDto authInfo;
-  UseBiometricsSwitched(this.authInfo);
+  UseBiometricsSwitchedEvent(this.authInfo);
 }
 
-class LogOutButtonPressed extends AuthenticationEvent {}
+class LogOutButtonPressedEvent extends AuthenticationEvent {}

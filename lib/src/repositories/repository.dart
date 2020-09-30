@@ -1,6 +1,7 @@
 import 'package:silverliningsreddit/src/dtos/auth_response_dto.dart';
 import 'package:silverliningsreddit/src/helpers/constants.dart';
 import 'package:silverliningsreddit/src/helpers/secure_storage.dart';
+import 'package:silverliningsreddit/src/models/post.dart';
 import 'package:silverliningsreddit/src/models/subreddit.dart';
 import 'package:silverliningsreddit/src/repositories/api_provider.dart';
 
@@ -37,11 +38,13 @@ class Repository {
     await secureStorage.storage.delete(key: StorageKeyConstants.xsrfToken);
   }
 
-  Future<List<Subreddit>> getSubreddits() async {
+  Future<List<Subreddit>> getSubscribedSubreddits() async {
     return await _apiProvider.getSubscribedSubreddits();
   }
 
-  //Future<Podcast> searchPodcasts(String criteria) {}
+  Future<List<Post>> getFrontPage() async {
+    return await _apiProvider.getFrontPage();
+  }
 }
 
 Repository repository = Repository();

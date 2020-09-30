@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:silverliningsreddit/src/dtos/auth_response_dto.dart';
 import 'package:silverliningsreddit/src/helpers/constants.dart';
+import 'package:silverliningsreddit/src/models/post.dart';
 import 'package:silverliningsreddit/src/models/subreddit.dart';
 import 'package:silverliningsreddit/src/repositories/repository.dart';
 
@@ -12,11 +13,31 @@ class ApiProvider {
   Future<List<Subreddit>> getSubscribedSubreddits() async {
     List<Subreddit> subreddits = List<Subreddit>();
     try {
-      final response = await _executeCommand('/subreddits/mine/subscriber');
+      final response = await _executeCommand(UrlConstants.subscribedSubs);
 
       if (response != null) {
         response.forEach((value) {
           subreddits.add(Subreddit.fromJson(value['data']));
+        });
+        return subreddits;
+      } else {
+        print(response);
+        return null;
+      }
+    } catch (e) {
+      print(e);
+      throw Exception(e);
+    }
+  }
+
+  Future<List<Post>> getFrontPage() async {
+    List<Post> subreddits = List<Post>();
+    try {
+      final response = await _executeCommand('');
+
+      if (response != null) {
+        response.forEach((value) {
+          subreddits.add(Post.fromJson(value['data']));
         });
         return subreddits;
       } else {
@@ -70,7 +91,7 @@ class ApiProvider {
 
   Future<List<dynamic>> _executeCommand(commandName) async {
     var response = await _client.get(
-      '${NetworkConstants.baseUrl}$commandName',
+      '${NetworkConstants.baseUrl}$commandName?raw_json=1',
       headers: await _buildHeaders(),
     );
 

@@ -26,29 +26,29 @@ class AuthenticationBloc
         if (DateTime.parse(tokenExpiration).isBefore(DateTime.now())) {
           final String refreshToken = await repository.getRefreshToken();
           var response = await repository.refreshAccessToken(refreshToken);
-          _saveTokenInfo(response);
+          _saveTokenInfo(response, secureStorage);
         }
-        yield Authenticated(null);
+        yield AuthenticatedState(null);
       } else {
-        yield NotAuthenticated(null);
+        yield NotAuthenticatedState(null);
       }
     }
 
     if (event is GetAccessToken) {
       var response = await repository.getAccessToken(event.authToken);
-      _saveTokenInfo(response);
+      _saveTokenInfo(response, secureStorage);
       secureStorage.storage.write(
           key: StorageKeyConstants.refreshToken, value: response.refreshToken);
     }
 
-    if (event is LogOutButtonPressed) {
-      yield PendingAuthentication(null);
+    if (event is LogOutButtonPressedEvent) {
+      yield PendingAuthenticationState(null);
       repository.logout();
-      yield NotAuthenticated(null);
+      yield NotAuthenticatedState(null);
     }
   }
 
-  void _saveTokenInfo(AuthResponseDto response) {
+  void _saveTokenInfo(AuthResponseDto response, SecureStorage secureStorage) {
     secureStorage.storage.write(
         key: StorageKeyConstants.accessToken, value: response.accessToken);
     secureStorage.storage.write(

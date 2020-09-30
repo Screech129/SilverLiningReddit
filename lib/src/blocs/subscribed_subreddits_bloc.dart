@@ -10,15 +10,14 @@ part 'subscribed_subreddits_state.dart';
 
 class SubscribedSubredditsBloc
     extends Bloc<SubscribedSubredditsEvent, SubscribedSubredditsState> {
-  SubscribedSubredditsBloc() : super(SubscribedSubredditsInitial());
-
+  SubscribedSubredditsBloc() : super(SubscribedSubredditsInitialState());
   @override
   Stream<SubscribedSubredditsState> mapEventToState(
     SubscribedSubredditsEvent event,
   ) async* {
-    if (event is LoadSubscribedSubreddits) {
-      var subReddits = await repository.getSubreddits();
-      yield SubscribedSubredditsLoaded(subReddits);
+    if (event is LoadSubscribedSubredditsEvent) {
+      var subReddits = await repository.getSubscribedSubreddits();
+      yield SubscribedSubredditsLoadedState(subReddits);
     }
   }
 }

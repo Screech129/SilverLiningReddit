@@ -7,14 +7,12 @@ abstract class SubscribedSubredditsState extends Equatable {
   List<Object> get props => [];
 }
 
-class SubscribedSubredditsInitial extends SubscribedSubredditsState {}
+class SubscribedSubredditsInitialState extends SubscribedSubredditsState {}
 
-class SubredditsLoading extends SubscribedSubredditsState {}
+class SubredditsLoadingState extends SubscribedSubredditsState {}
 
-class SubscribedSubredditsLoaded extends SubscribedSubredditsState {
+class SubscribedSubredditsLoadedState extends SubscribedSubredditsState {
   final List<Subreddit> subreddits;
 
-  SubscribedSubredditsLoaded(this.subreddits);
+  SubscribedSubredditsLoadedState(this.subreddits);
 }
-
-class SubredditsRefreshing extends SubscribedSubredditsState {}

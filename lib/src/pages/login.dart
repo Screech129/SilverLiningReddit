@@ -22,7 +22,7 @@ class Login extends StatelessWidget {
   Widget _buildBody(context) {
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
       builder: (context, state) {
-        if (state is NotAuthenticated) {
+        if (state is NotAuthenticatedState) {
           var stateGuid = Uuid().v4();
           var fullAuthUrl = Uri.encodeFull(
               '${NetworkConstants.authCodeUrl}${NetworkConstants.clientId}&${NetworkConstants.redirectUri}&${NetworkConstants.scopes}&duration=permanent&response_type=code&state=$stateGuid');

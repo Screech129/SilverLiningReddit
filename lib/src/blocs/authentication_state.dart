@@ -7,30 +7,30 @@ abstract class AuthenticationState {
   AuthenticationState(this.authInfo);
 }
 
-class AuthenticationInitial extends AuthenticationState {
+class AuthenticationInitialState extends AuthenticationState {
   final bool biometricsAvailable;
-  AuthenticationInitial(this.biometricsAvailable, AuthInfoDto authInfo)
+  AuthenticationInitialState(this.biometricsAvailable, AuthInfoDto authInfo)
       : super(authInfo);
 }
 
-class NotAuthenticated extends AuthenticationState {
-  NotAuthenticated(AuthInfoDto authInfo) : super(authInfo);
+class NotAuthenticatedState extends AuthenticationState {
+  NotAuthenticatedState(AuthInfoDto authInfo) : super(authInfo);
 }
 
-class Authenticated extends AuthenticationState {
-  Authenticated(AuthInfoDto authInfo) : super(authInfo);
+class AuthenticatedState extends AuthenticationState {
+  AuthenticatedState(AuthInfoDto authInfo) : super(authInfo);
 }
 
-class PendingAuthentication extends AuthenticationState {
-  PendingAuthentication(AuthInfoDto authInfo) : super(authInfo);
+class PendingAuthenticationState extends AuthenticationState {
+  PendingAuthenticationState(AuthInfoDto authInfo) : super(authInfo);
 }
 
-class FailedAuthentication extends AuthenticationState {
+class FailedAuthenticationState extends AuthenticationState {
   final String errorMessage;
-  FailedAuthentication(this.errorMessage, AuthInfoDto authInfo)
+  FailedAuthenticationState(this.errorMessage, AuthInfoDto authInfo)
       : super(authInfo);
 }
 
-class BiometricsSwitched extends AuthenticationState {
-  BiometricsSwitched(AuthInfoDto authInfo) : super(authInfo);
+class BiometricsSwitchedState extends AuthenticationState {
+  BiometricsSwitchedState(AuthInfoDto authInfo) : super(authInfo);
 }

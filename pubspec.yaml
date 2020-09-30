@@ -47,7 +47,7 @@ dev_dependencies:
 
   build_runner: any
   json_serializable: '^3.3.0' # >= 3.4.1 not currently compatible with reflectable
-
+  bloc_test: ^7.0.4
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

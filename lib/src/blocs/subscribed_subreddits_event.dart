@@ -7,6 +7,4 @@ abstract class SubscribedSubredditsEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadSubscribedSubreddits extends SubscribedSubredditsEvent {}
-
-class RefreshSubreddit extends SubscribedSubredditsEvent {}
+class LoadSubscribedSubredditsEvent extends SubscribedSubredditsEvent {}

@@ -1,5 +1,6 @@
 class NavigationConstants {
   static const String home = '/';
+  static const String post = '/post';
 }
 
 class PageTitleConstants {
@@ -27,8 +28,7 @@ class ErrorConstants {
 }
 
 class NetworkConstants {
-  static const String baseUrl =
-      'https://oauth.reddit.com'; //Change depending on environment and ngrok
+  static const String baseUrl = 'https://oauth.reddit.com';
   static const String authCodeUrl =
       'https://www.reddit.com/api/v1/authorize.compact?';
   static const String tokenUrl = 'https://www.reddit.com/api/v1/access_token';

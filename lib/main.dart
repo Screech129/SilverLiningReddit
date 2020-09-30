@@ -41,7 +41,7 @@ void main() async {
     BlocProvider<AuthenticationBloc>(
       create: (context) {
         return AuthenticationBloc(
-            AuthenticationInitial(hasBiometrics, _authInfo))
+            AuthenticationInitialState(hasBiometrics, _authInfo))
           ..add(AppStarted());
       },
       child: App(),
