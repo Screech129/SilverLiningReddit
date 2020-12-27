@@ -49,6 +49,7 @@ class Login extends StatelessWidget {
 
                 BlocProvider.of<AuthenticationBloc>(context)
                     .add(GetAccessToken(authToken));
+                Navigator.pushNamed(context, NavigationConstants.home);
               }
             },
           );

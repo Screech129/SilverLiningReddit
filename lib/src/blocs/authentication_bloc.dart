@@ -40,6 +40,7 @@ class AuthenticationBloc
       _saveTokenInfo(response, secureStorage);
       secureStorage.storage.write(
           key: StorageKeyConstants.refreshToken, value: response.refreshToken);
+      yield AuthenticatedState(null);
     }
 
     if (event is LogOutButtonPressedEvent) {
