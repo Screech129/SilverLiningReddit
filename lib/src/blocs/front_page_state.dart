@@ -15,4 +15,6 @@ class FrontPageLoadedState extends FrontPageState {
   FrontPageLoadedState(this.posts);
 }
 
+class FrontPageLoadingState extends FrontPageState {}
+
 class FrontPageRefreshingState extends FrontPageState {}

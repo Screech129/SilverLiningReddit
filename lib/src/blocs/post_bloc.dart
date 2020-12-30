@@ -7,7 +7,7 @@ part 'post_event.dart';
 part 'post_state.dart';
 
 class PostBloc extends Bloc<PostEvent, PostState> {
-  PostBloc() : super(PostInitial());
+  PostBloc() : super(PostInitialState());
 
   @override
   Stream<PostState> mapEventToState(

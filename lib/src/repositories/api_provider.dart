@@ -49,6 +49,26 @@ class ApiProvider {
     }
   }
 
+  Future<List<String>> getComments(String subreddit, String postId) async {
+    try {
+      var commentUrl =
+          UrlConstants.defaulSubs + subreddit + UrlConstants.comments + postId;
+      final response = await _executeCommand(commentUrl, null);
+
+      if (response != null) {
+        response.forEach((value) {
+          var temp = value;
+        });
+      } else {
+        print(response);
+        return null;
+      }
+    } catch (e) {
+      print(e);
+      throw Exception(e);
+    }
+  }
+
   Future<AuthResponseDto> getAccessToken(String authToken) async {
     var encodedSecrets = utf8.encode("${NetworkConstants.clientIdRaw}:''");
     var rawBody = {
@@ -91,7 +111,7 @@ class ApiProvider {
   Future<List<dynamic>> _executeCommand(commandName, String token) async {
     var response = await _client.get(
       '${NetworkConstants.baseUrl}$commandName?raw_json=1',
-      headers: await _buildHeaders(token),
+      headers: token != null ? await _buildHeaders(token) : '',
     );
 
     var succeeded = await json.decode(response.body)['data'] != null;

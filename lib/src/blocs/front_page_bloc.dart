@@ -19,6 +19,7 @@ class FrontPageBloc extends Bloc<FrontPageEvent, FrontPageState> {
   ) async* {
     if (event is LoadFrontPageEvent) {
       List<Post> posts;
+      yield FrontPageLoadingState();
       try {
         posts = await _repository.getFrontPage();
       } catch (e) {

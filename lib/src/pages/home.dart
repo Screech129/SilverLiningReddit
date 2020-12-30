@@ -22,6 +22,11 @@ class Home extends StatelessWidget {
         if (state is FrontPageInitialState) {
           BlocProvider.of<FrontPageBloc>(context).add(LoadFrontPageEvent());
         }
+        if (state is FrontPageLoadingState) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
         if (state is FrontPageLoadedState) {
           return ListView.builder(
               itemCount: state.posts.length,
@@ -58,18 +63,9 @@ class Home extends StatelessWidget {
                     posts[index].preview.images[0].resolutions.length > 0
                 ? Center(
                     child: Image(
-                        image: NetworkImage(
-                            posts[index].preview.images[0].resolutions[0].url),
-                        height: posts[index]
-                            .preview
-                            .images[0]
-                            .resolutions[0]
-                            .height,
-                        width: posts[index]
-                            .preview
-                            .images[0]
-                            .resolutions[0]
-                            .width))
+                      image: NetworkImage(posts[index].thumbnail),
+                    ),
+                  )
                 : Text(''),
           ],
         ),
