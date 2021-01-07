@@ -8,6 +8,7 @@ class Post {
   String subreddit;
   String selftext;
   String authorFullname;
+  String id;
   bool saved;
   bool clicked;
   String title;

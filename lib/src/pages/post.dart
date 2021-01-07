@@ -14,30 +14,34 @@ class PostPage extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context, PostNavDto navDto) {
-    return BlocBuilder<PostBloc, PostState>(
-      builder: (context, state) {
-        if (state is PostInitialState) {
-          BlocProvider.of<PostBloc>(context).add(LoadPostEvent());
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        } else {
-          return Column(
-            children: [
-              Container(
-                child: Text(navDto.post.title),
-                padding: EdgeInsets.all(5.0),
-                margin: EdgeInsets.all(5.0),
-              ),
-              Divider(
-                color: Colors.green,
-                height: 20,
-                thickness: 6,
-              )
-            ],
-          );
-        }
-      },
+    return BlocProvider(
+      create: (context) => PostBloc(navDto.repository),
+      child: BlocBuilder<PostBloc, PostState>(
+        builder: (context, state) {
+          if (state is PostInitialState) {
+            BlocProvider.of<PostBloc>(context)
+                .add(LoadPostEvent(navDto.post.subreddit, navDto.post.id));
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            return Column(
+              children: [
+                Container(
+                  child: Text(navDto.post.title),
+                  padding: EdgeInsets.all(5.0),
+                  margin: EdgeInsets.all(5.0),
+                ),
+                Divider(
+                  color: Colors.green,
+                  height: 20,
+                  thickness: 6,
+                )
+              ],
+            );
+          }
+        },
+      ),
     );
   }
 }

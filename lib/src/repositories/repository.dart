@@ -45,4 +45,9 @@ class Repository {
     var token = await getToken();
     return await _apiProvider.getFrontPage(token);
   }
+
+  Future<List<String>> getComments(String subreddit, String postId) async {
+    var token = await getToken();
+    return await _apiProvider.getComments(subreddit, postId, token);
+  }
 }

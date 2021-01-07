@@ -48,6 +48,7 @@ class UrlConstants {
   static const String defaulSubs = '/subreddits/default';
   static const String subPrefix = '/r/';
   static const String comments = '/comments/';
+  static const String info = '/api/info';
 }
 
 class WidgetConstants {

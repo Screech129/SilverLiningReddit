@@ -49,11 +49,11 @@ class ApiProvider {
     }
   }
 
-  Future<List<String>> getComments(String subreddit, String postId) async {
+  Future<List<String>> getComments(
+      String subreddit, String postId, String token) async {
     try {
-      var commentUrl =
-          UrlConstants.defaulSubs + subreddit + UrlConstants.comments + postId;
-      final response = await _executeCommand(commentUrl, null);
+      var commentUrl = UrlConstants.subPrefix + subreddit + UrlConstants.info;
+      final response = await _executeCommand(commentUrl, token);
 
       if (response != null) {
         response.forEach((value) {
@@ -108,10 +108,26 @@ class ApiProvider {
     return AuthResponseDto.fromJson(json.decode(response.body));
   }
 
-  Future<List<dynamic>> _executeCommand(commandName, String token) async {
+  Future<List<dynamic>> _executeCommand(
+      String commandName, String token) async {
     var response = await _client.get(
       '${NetworkConstants.baseUrl}$commandName?raw_json=1',
       headers: token != null ? await _buildHeaders(token) : '',
+    );
+
+    var succeeded = await json.decode(response.body)['data'] != null;
+    if (succeeded) {
+      var payload = await json.decode(response.body)['data']['children'];
+      return payload;
+    } else {
+      print(response.body);
+      return null;
+    }
+  }
+
+  Future<List<dynamic>> _executeCommandOther(String commandName) async {
+    var response = await _client.get(
+      '${NetworkConstants.baseUrl}$commandName?raw_json=1',
     );
 
     var succeeded = await json.decode(response.body)['data'] != null;

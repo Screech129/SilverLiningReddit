@@ -7,5 +7,8 @@ abstract class PostEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadPostEvent extends PostEvent {}
-
+class LoadPostEvent extends PostEvent {
+  final String subreddit;
+  final String postId;
+  LoadPostEvent(this.subreddit, this.postId);
+}

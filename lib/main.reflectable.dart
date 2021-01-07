@@ -36,13 +36,13 @@ final _data = <r.Reflectable, r.ReflectorData>{
             {},
             {},
             {
-              r'': (b) => ({accessToken, expiresIn, refreshToken}) => b
+              r'': (bool b) => ({accessToken, expiresIn, refreshToken}) => b
                   ? prefix1.AuthResponseDto(
                       accessToken: accessToken,
                       expiresIn: expiresIn,
                       refreshToken: refreshToken)
                   : null,
-              r'fromJson': (b) =>
+              r'fromJson': (bool b) =>
                   (json) => b ? prefix1.AuthResponseDto.fromJson(json) : null
             },
             0,
@@ -63,12 +63,12 @@ final _data = <r.Reflectable, r.ReflectorData>{
             {},
             {},
             {
-              r'': (b) =>
+              r'': (bool b) =>
                   (id, userName, password, firstName, lastName, email) => b
                       ? prefix2.User(
                           id, userName, password, firstName, lastName, email)
                       : null,
-              r'fromJson': (b) =>
+              r'fromJson': (bool b) =>
                   (json) => b ? prefix2.User.fromJson(json) : null
             },
             1,

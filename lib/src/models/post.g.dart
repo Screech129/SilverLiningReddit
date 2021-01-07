@@ -11,6 +11,7 @@ Post _$PostFromJson(Map<String, dynamic> json) {
     ..subreddit = json['subreddit'] as String
     ..selftext = json['selftext'] as String
     ..authorFullname = json['author_fullname'] as String
+    ..id = json['id'] as String
     ..saved = json['saved'] as bool
     ..clicked = json['clicked'] as bool
     ..title = json['title'] as String
@@ -30,6 +31,7 @@ Map<String, dynamic> _$PostToJson(Post instance) => <String, dynamic>{
       'subreddit': instance.subreddit,
       'selftext': instance.selftext,
       'author_fullname': instance.authorFullname,
+      'id': instance.id,
       'saved': instance.saved,
       'clicked': instance.clicked,
       'title': instance.title,
