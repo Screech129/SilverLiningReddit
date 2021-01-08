@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/all.dart';
 import 'package:local_auth/local_auth.dart';
 // ignore: unused_import
 import 'package:reflectable/reflectable.dart';
@@ -36,14 +37,5 @@ void main() async {
           await secureStorage.storage.read(key: StorageKeyConstants.password);
     }
   }
-  runApp(
-    BlocProvider<AuthenticationBloc>(
-      create: (context) {
-        return AuthenticationBloc(
-            AuthenticationInitialState(hasBiometrics, _authInfo), _repository)
-          ..add(AppStarted());
-      },
-      child: App(_repository),
-    ),
-  );
+  runApp(const ProviderScope(child: App()));
 }

@@ -5,14 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:silverliningsreddit/src/pages/home.dart';
 import 'package:silverliningsreddit/src/pages/login.dart';
 import 'package:silverliningsreddit/src/pages/post.dart';
-import 'package:silverliningsreddit/src/repositories/repository.dart';
 
-import 'blocs/blocs.dart';
 import 'helpers/helpers.dart';
 
 class App extends StatelessWidget {
-  const App(this._repository, {Key key}) : super(key: key);
-  final Repository _repository;
+  const App({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     Bloc.observer = AppBlocObserver();

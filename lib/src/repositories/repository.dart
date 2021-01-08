@@ -1,11 +1,11 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silverliningsreddit/src/dtos/dtos.dart';
 import 'package:silverliningsreddit/src/helpers/helpers.dart';
 import 'package:silverliningsreddit/src/models/models.dart';
-import 'package:silverliningsreddit/src/repositories/api_provider.dart';
+
+final repositoryProvider = Provider((ref) => Repository());
 
 class Repository {
-  ApiProvider _apiProvider = ApiProvider();
-
   Future<String> getToken() async {
     var token =
         await secureStorage.storage.read(key: StorageKeyConstants.accessToken);

@@ -1,9 +1,12 @@
 import 'dart:convert';
 
+import 'package:flutter_riverpod/all.dart';
 import 'package:http/http.dart';
 import 'package:silverliningsreddit/src/dtos/dtos.dart';
 import 'package:silverliningsreddit/src/helpers/helpers.dart';
 import 'package:silverliningsreddit/src/models/models.dart';
+
+final apiProvider = Provider((ref) => ApiProvider());
 
 class ApiProvider {
   Client _client = Client();

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:silverliningsreddit/src/blocs/blocs.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silverliningsreddit/src/helpers/helpers.dart';
 import 'package:silverliningsreddit/src/widgets/styled_scaffold.dart';
 import 'package:uuid/uuid.dart';
@@ -20,8 +19,8 @@ class Login extends StatelessWidget {
   }
 
   Widget _buildBody(context) {
-    return BlocBuilder<AuthenticationBloc, AuthenticationState>(
-      builder: (context, state) {
+    return Consumer(
+      builder: (context, watch, child) {
         if (state is NotAuthenticatedState) {
           var stateGuid = Uuid().v4();
           var fullAuthUrl = Uri.encodeFull(
