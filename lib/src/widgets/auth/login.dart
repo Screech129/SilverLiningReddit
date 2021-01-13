@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:silverliningsreddit/src/blocs/blocs.dart';
 import 'package:silverliningsreddit/src/helpers/helpers.dart';
-import 'package:silverliningsreddit/src/widgets/styled_scaffold.dart';
+import 'package:silverliningsreddit/src/widgets/scaffold/styled_scaffold.dart';
 import 'package:uuid/uuid.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
+import 'authentication_bloc.dart';
 
 class Login extends StatelessWidget {
   const Login({Key key}) : super(key: key);

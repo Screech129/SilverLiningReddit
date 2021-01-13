@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:silverliningsreddit/src/blocs/subscribed_subreddits_bloc.dart';
+import 'package:silverliningsreddit/src/widgets/scaffold/subscribed_subreddits_bloc.dart';
 import 'package:silverliningsreddit/src/models/models.dart';
 import 'package:silverliningsreddit/src/repositories/repository.dart';
-import 'package:silverliningsreddit/src/widgets/navigation_drawer.dart';
+import 'package:silverliningsreddit/src/widget_templates/navigation_drawer.dart';
 
 class StyledScaffold extends StatelessWidget {
   final String pageTitle;

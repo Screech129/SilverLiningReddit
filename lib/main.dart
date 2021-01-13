@@ -4,12 +4,12 @@ import 'package:local_auth/local_auth.dart';
 // ignore: unused_import
 import 'package:reflectable/reflectable.dart';
 import 'package:silverliningsreddit/src/app.dart';
-import 'package:silverliningsreddit/src/blocs/blocs.dart';
 import 'package:silverliningsreddit/src/dtos/dtos.dart';
 import 'package:silverliningsreddit/src/helpers/helpers.dart';
 import 'package:silverliningsreddit/src/repositories/db_provider.dart';
 import 'package:silverliningsreddit/src/repositories/repository.dart';
 import 'main.reflectable.dart';
+import 'src/widgets/auth/authentication_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

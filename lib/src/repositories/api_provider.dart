@@ -30,14 +30,11 @@ class ApiProvider {
   }
 
   Future<List<Post>> getFrontPage(String token) async {
-    List<Post> subreddits = List<Post>();
     try {
       final response = await _executeCommand('', token);
 
       if (response != null) {
-        response.forEach((value) {
-          subreddits.add(Post.fromJson(value['data']));
-        });
+        var subreddits = response.map((e) => Post.fromJson(e)).toList();
         return subreddits;
       } else {
         print(response);

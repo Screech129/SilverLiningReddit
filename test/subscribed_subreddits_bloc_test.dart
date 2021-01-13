@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:silverliningsreddit/src/blocs/blocs.dart';
 
 import 'package:bloc_test/bloc_test.dart';
 import 'package:silverliningsreddit/src/models/models.dart';
 import 'package:silverliningsreddit/src/repositories/repository.dart';
+import 'package:silverliningsreddit/src/widgets/scaffold/subscribed_subreddits_bloc.dart';
 
 class MockRepository extends Mock implements Repository {}
 

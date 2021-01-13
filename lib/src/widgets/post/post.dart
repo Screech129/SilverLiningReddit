@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:silverliningsreddit/src/blocs/blocs.dart';
 import 'package:silverliningsreddit/src/dtos/dtos.dart';
-import 'package:silverliningsreddit/src/widgets/styled_scaffold.dart';
+import 'package:silverliningsreddit/src/widgets/scaffold/styled_scaffold.dart';
+
+import 'post_bloc.dart';
 
 class PostPage extends StatelessWidget {
   const PostPage({Key key}) : super(key: key);
