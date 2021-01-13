@@ -14,8 +14,8 @@ class Home extends BaseWidget {
   final Repository repository;
 
   @override
-  onLoadedState(LoadedState state) {
-    var frontPageState = (FrontPageState) state;
+  onLoadedState(StateBase state) {
+    var frontPageState = state as FrontPageState;
 
     return ListView.builder(
         itemCount: frontPageState.posts.length,

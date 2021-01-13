@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:silverliningsreddit/src/dtos/dtos.dart';
 import 'package:silverliningsreddit/src/widgets/base/bloc_base.dart';
 import 'package:silverliningsreddit/src/widgets/base/event_base.dart';
 import 'package:silverliningsreddit/src/widgets/base/state_base.dart';
@@ -39,7 +38,7 @@ class BaseWidget extends StatelessWidget {
     BlocProvider.of<BaseBloc>(context).add(LoadPageEvent());
   }
 
-  Widget onLoadedState(LoadedState state) {
+  Widget onLoadedState(StateBase state) {
     return Text("Not implemented");
   }
 
