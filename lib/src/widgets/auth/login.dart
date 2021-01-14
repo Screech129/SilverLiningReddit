@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silverliningsreddit/src/helpers/helpers.dart';
-import 'package:silverliningsreddit/src/widgets/styled_scaffold.dart';
+import 'package:silverliningsreddit/src/widget_templates/scaffold/styled_scaffold.dart';
 import 'package:uuid/uuid.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 

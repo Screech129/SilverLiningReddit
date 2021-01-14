@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:silverliningsreddit/src/blocs/blocs.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/all.dart';
 import 'package:silverliningsreddit/src/dtos/dtos.dart';
 
 import 'package:silverliningsreddit/src/helpers/helpers.dart';
 import 'package:silverliningsreddit/src/models/models.dart';
 import 'package:silverliningsreddit/src/repositories/repository.dart';
-import 'package:silverliningsreddit/src/widgets/styled_scaffold.dart';
+import 'package:silverliningsreddit/src/widget_templates/scaffold/styled_scaffold.dart';
+import 'package:silverliningsreddit/src/widgets/home/home_view_model.dart';
 
-class Home extends StatelessWidget {
+class Home extends HookWidget {
   const Home(this.repository, {Key key}) : super(key: key);
   final Repository repository;
   @override
@@ -17,25 +18,21 @@ class Home extends StatelessWidget {
   }
 
   _buildBody(BuildContext context) {
-    return BlocBuilder<FrontPageBloc, FrontPageState>(
-      builder: (context, state) {
-        if (state is FrontPageInitialState) {
-          BlocProvider.of<FrontPageBloc>(context).add(LoadFrontPageEvent());
-        }
-        if (state is FrontPageLoadingState) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        if (state is FrontPageLoadedState) {
-          return ListView.builder(
-              itemCount: state.posts.length,
-              itemBuilder: (context, index) {
-                return _buildPostsItem(context, index, state.posts, repository);
-              });
-        }
-        return Container();
-      },
+    final posts = useProvider(postProvider);
+    return posts.when(
+      data: (posts) => ListView.builder(
+        itemCount: posts.length,
+        itemBuilder: (context, index) {
+          return _buildPostsItem(context, index, posts, repository);
+        },
+      ),
+      loading: () => Center(
+        child: CircularProgressIndicator(),
+      ),
+      error: (err, stack) => Text(
+        err.toString(),
+        style: TextStyle(color: Colors.red),
+      ),
     );
   }
 

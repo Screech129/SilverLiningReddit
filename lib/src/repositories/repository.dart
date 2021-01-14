@@ -3,9 +3,16 @@ import 'package:silverliningsreddit/src/dtos/dtos.dart';
 import 'package:silverliningsreddit/src/helpers/helpers.dart';
 import 'package:silverliningsreddit/src/models/models.dart';
 
-final repositoryProvider = Provider((ref) => Repository());
+final repositoryProvider = Provider((ref) {
+  return Repository(ref.read(secureStorageProvider));
+});
 
 class Repository {
+  SecureStorage secureStorage;
+  Repository(SecureStorage secureStorage) {
+    this.secureStorage = secureStorage;
+  }
+
   Future<String> getToken() async {
     var token =
         await secureStorage.storage.read(key: StorageKeyConstants.accessToken);

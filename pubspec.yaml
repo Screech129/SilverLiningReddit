@@ -25,7 +25,8 @@ dependencies:
     sdk: flutter
 
   json_annotation: ^3.0.1
-  flutter_riverpod: ^0.12.1
+  hooks_riverpod: ^0.12.1 
+  flutter_hooks: ^0.15.0
   local_auth: ^0.6.3+1
   equatable: ^1.2.5 #Used to compare objects
   intl: ^0.16.1 #Used for date formatting
