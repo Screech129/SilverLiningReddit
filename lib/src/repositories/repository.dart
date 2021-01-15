@@ -2,15 +2,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silverliningsreddit/src/dtos/dtos.dart';
 import 'package:silverliningsreddit/src/helpers/helpers.dart';
 import 'package:silverliningsreddit/src/models/models.dart';
+import 'package:silverliningsreddit/src/repositories/api_provider.dart';
 
 final repositoryProvider = Provider((ref) {
-  return Repository(ref.read(secureStorageProvider));
+  return Repository(ref.read(secureStorageProvider), ref.read(apiProvider));
 });
 
 class Repository {
   SecureStorage secureStorage;
-  Repository(SecureStorage secureStorage) {
+  ApiProvider _apiProvider;
+  Repository(SecureStorage secureStorage, ApiProvider apiProvider) {
     this.secureStorage = secureStorage;
+    this._apiProvider = apiProvider;
   }
 
   Future<String> getToken() async {
