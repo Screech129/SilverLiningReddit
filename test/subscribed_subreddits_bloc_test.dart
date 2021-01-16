@@ -8,12 +8,12 @@ import 'package:silverliningsreddit/src/widgets/auth/login_view_model.dart';
 class MockRepository extends Mock implements IRepository {}
 
 class MockLoginViewModel extends Mock implements LoginViewModel {
-  MockLoginViewModel() {
-    var testing = ProviderContainer();
-    var temp1333 = testing.read(token);
-    var temp1444 = testing.read(tokenExpiration);
-
-    var here = 14;
+  final ProviderReference ref;
+  String idk;
+  MockLoginViewModel(this.ref) {
+    var tokenAnswer = ref.read(token);
+    tokenAnswer.whenData((x) => idk = x);
+    var temperature = 14;
   }
 }
 
@@ -24,15 +24,13 @@ void main() {
     when(repository.getTokenExpiration())
         .thenAnswer((_) => Future.value("01/15/2021"));
     test("Testing", () async {
-      var tokenTest = await repository.getToken();
-      var tokenExpirationTest = await repository.getTokenExpiration();
       final container = ProviderContainer(overrides: [
         token.overrideWithProvider(
-            FutureProvider((ref) async => await repository.getToken())),
-        tokenExpiration.overrideWithProvider(FutureProvider(
-            (ref) async => await repository.getTokenExpiration())),
+            FutureProvider((ref) => repository.getToken())),
+        tokenExpiration.overrideWithProvider(
+            FutureProvider((ref) => repository.getTokenExpiration())),
         loginViewModelProvider.overrideWithProvider(Provider((ref) {
-          return MockLoginViewModel();
+          return MockLoginViewModel(ref);
         }))
       ]);
 
