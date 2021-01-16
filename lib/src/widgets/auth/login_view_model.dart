@@ -12,9 +12,14 @@ final tokenExpiration = FutureProvider<String>((ref) async {
 });
 
 final loginViewModelProvider = Provider((ref) {
-  return LoginViewModel();
+  return LoginViewModel(ref.read(token), ref.read(tokenExpiration));
 });
 
 class LoginViewModel {
-  LoginViewModel();
+  String token;
+  String tokenExpiration;
+  LoginViewModel(AsyncValue<String> token, AsyncValue<String> tokenExpiration) {
+    this.token = token.data.value;
+    this.tokenExpiration = tokenExpiration.data.value;
+  }
 }

@@ -1,45 +1,43 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mockito/mockito.dart';
-import 'package:silverliningsreddit/src/blocs/blocs.dart';
 
-import 'package:bloc_test/bloc_test.dart';
-import 'package:silverliningsreddit/src/models/models.dart';
-import 'package:silverliningsreddit/src/repositories/repository.dart';
+import 'package:silverliningsreddit/src/repositories/ireposistory.dart';
+import 'package:silverliningsreddit/src/widgets/auth/login_view_model.dart';
 
-class MockRepository extends Mock implements Repository {}
+class MockRepository extends Mock implements IRepository {}
+
+class MockLoginViewModel extends Mock implements LoginViewModel {
+  MockLoginViewModel() {
+    var testing = ProviderContainer();
+    var temp1333 = testing.read(token);
+    var temp1444 = testing.read(tokenExpiration);
+
+    var here = 14;
+  }
+}
 
 void main() {
-  group('subcribedSubredditsBloc', () {
-    SubscribedSubredditsBloc subredditsBloc;
-    Repository repository;
+  group('viewModelTest', () {
+    final repository = MockRepository();
+    when(repository.getToken()).thenAnswer((_) => Future.value("1234567777"));
+    when(repository.getTokenExpiration())
+        .thenAnswer((_) => Future.value("01/15/2021"));
+    test("Testing", () async {
+      var tokenTest = await repository.getToken();
+      var tokenExpirationTest = await repository.getTokenExpiration();
+      final container = ProviderContainer(overrides: [
+        token.overrideWithProvider(
+            FutureProvider((ref) async => await repository.getToken())),
+        tokenExpiration.overrideWithProvider(FutureProvider(
+            (ref) async => await repository.getTokenExpiration())),
+        loginViewModelProvider.overrideWithProvider(Provider((ref) {
+          return MockLoginViewModel();
+        }))
+      ]);
 
-    setUp(() {
-      repository = MockRepository();
-      subredditsBloc = SubscribedSubredditsBloc(repository);
+      var temp = container.read(loginViewModelProvider);
+      var anotehrTemp = 14;
     });
-
-    blocTest(
-      'Faield state returned if getting subscribed subs fails',
-      build: () {
-        when(repository.getSubscribedSubreddits())
-            .thenThrow(Exception('failure'));
-        return subredditsBloc;
-      },
-      act: (bloc) => bloc.add(LoadSubscribedSubredditsEvent()),
-      expect: <SubscribedSubredditsState>[
-        SubscribedSubredditsLoadingState(),
-        SubscribedSubredditsFaieldState()
-      ],
-    );
-
-    blocTest(
-      'Returns loaded state if succesful',
-      build: () => subredditsBloc,
-      act: (bloc) => bloc.add(LoadSubscribedSubredditsEvent()),
-      expect: <SubscribedSubredditsState>[
-        SubscribedSubredditsLoadingState(),
-        SubscribedSubredditsLoadedState(List<Subreddit>())
-      ],
-    );
   });
 }

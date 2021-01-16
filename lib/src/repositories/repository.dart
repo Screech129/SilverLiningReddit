@@ -3,12 +3,13 @@ import 'package:silverliningsreddit/src/dtos/dtos.dart';
 import 'package:silverliningsreddit/src/helpers/helpers.dart';
 import 'package:silverliningsreddit/src/models/models.dart';
 import 'package:silverliningsreddit/src/repositories/api_provider.dart';
+import 'package:silverliningsreddit/src/repositories/ireposistory.dart';
 
 final repositoryProvider = Provider((ref) {
   return Repository(ref.read(secureStorageProvider), ref.read(apiProvider));
 });
 
-class Repository {
+class Repository implements IRepository {
   SecureStorage secureStorage;
   ApiProvider _apiProvider;
   Repository(SecureStorage secureStorage, ApiProvider apiProvider) {
