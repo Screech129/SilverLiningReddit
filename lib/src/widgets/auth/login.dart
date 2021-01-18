@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/all.dart';
 import 'package:silverliningsreddit/src/helpers/helpers.dart';
 import 'package:silverliningsreddit/src/widget_templates/scaffold/styled_scaffold.dart';
@@ -16,54 +15,39 @@ class Login extends HookWidget {
     return StyledScaffold(
       PageTitleConstants.login,
       _buildBody(context),
-      null,
       showAppDrawer: false,
     );
   }
 
   Widget _buildBody(context) {
-    var temp = useProvider(loginViewModelProvider);
+    var loginViewModel = useProvider(loginViewModelProvider);
+    var stateGuid = Uuid().v4();
+    var fullAuthUrl = Uri.encodeFull(
+        '${NetworkConstants.authCodeUrl}${NetworkConstants.clientId}&${NetworkConstants.redirectUri}&${NetworkConstants.scopes}&duration=permanent&response_type=code&state=$stateGuid');
 
-    return Text("testing");
-    // return Consumer(
-    //   builder: (context, watch, child) {
-    //     if (state is NotAuthenticatedState) {
-    //       var stateGuid = Uuid().v4();
-    //       var fullAuthUrl = Uri.encodeFull(
-    //           '${NetworkConstants.authCodeUrl}${NetworkConstants.clientId}&${NetworkConstants.redirectUri}&${NetworkConstants.scopes}&duration=permanent&response_type=code&state=$stateGuid');
+    return WebView(
+      initialUrl: fullAuthUrl,
+      javascriptMode: JavascriptMode.unrestricted,
+      onPageFinished: (url) {
+        if (url.contains('${StorageKeyConstants.accessToken}=') &&
+            url.contains('callback')) {
+          var queryParams = Uri.splitQueryString(url);
+          String authToken;
+          queryParams.forEach((key, value) {
+            if (key.contains('state') && value != stateGuid.toString()) {
+              return;
+            }
 
-    //       return WebView(
-    //         initialUrl: fullAuthUrl,
-    //         javascriptMode: JavascriptMode.unrestricted,
-    //         onPageFinished: (url) {
-    //           if (url.contains('${StorageKeyConstants.accessToken}=') &&
-    //               url.contains('callback')) {
-    //             var queryParams = Uri.splitQueryString(url);
-    //             String authToken;
-    //             queryParams.forEach((key, value) {
-    //               if (key.contains('state') && value != stateGuid.toString()) {
-    //                 return;
-    //               }
+            if (key.contains(StorageKeyConstants.accessToken)) {
+              authToken = value;
+              loginViewModel.saveAuthToken(authToken);
+            }
+          });
 
-    //               if (key.contains(StorageKeyConstants.accessToken)) {
-    //                 authToken = value;
-    //                 secureStorage.storage.write(
-    //                     key: StorageKeyConstants.authToken, value: value);
-    //               }
-    //             });
-
-    //             BlocProvider.of<AuthenticationBloc>(context)
-    //                 .add(GetAccessToken(authToken));
-    //             Navigator.pushNamed(context, NavigationConstants.home);
-    //           }
-    //         },
-    //       );
-    //     } else {
-    //       return Center(
-    //         child: CircularProgressIndicator(),
-    //       );
-    //     }
-    //   },
-    // );
+          loginViewModel.saveAccessToken(authToken);
+          Navigator.pushNamed(context, NavigationConstants.home);
+        }
+      },
+    );
   }
 }

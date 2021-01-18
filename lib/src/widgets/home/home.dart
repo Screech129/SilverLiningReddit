@@ -5,16 +5,14 @@ import 'package:silverliningsreddit/src/dtos/dtos.dart';
 
 import 'package:silverliningsreddit/src/helpers/helpers.dart';
 import 'package:silverliningsreddit/src/models/models.dart';
-import 'package:silverliningsreddit/src/repositories/repository.dart';
 import 'package:silverliningsreddit/src/widget_templates/scaffold/styled_scaffold.dart';
 import 'package:silverliningsreddit/src/widgets/home/home_view_model.dart';
 
 class Home extends HookWidget {
-  const Home(this.repository, {Key key}) : super(key: key);
-  final Repository repository;
+  const Home({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return StyledScaffold("Home", _buildBody(context), repository);
+    return StyledScaffold("Home", _buildBody(context));
   }
 
   _buildBody(BuildContext context) {
@@ -23,7 +21,7 @@ class Home extends HookWidget {
       data: (posts) => ListView.builder(
         itemCount: posts.length,
         itemBuilder: (context, index) {
-          return _buildPostsItem(context, index, posts, repository);
+          return _buildPostsItem(context, index, posts);
         },
       ),
       loading: () => Center(
@@ -36,12 +34,11 @@ class Home extends HookWidget {
     );
   }
 
-  Widget _buildPostsItem(BuildContext context, int index, List<Post> posts,
-      Repository repository) {
+  Widget _buildPostsItem(BuildContext context, int index, List<Post> posts) {
     return GestureDetector(
       onTap: () => {
         Navigator.pushNamed(context, NavigationConstants.post,
-            arguments: PostNavDto(posts[index].title, repository, posts[index]))
+            arguments: PostNavDto(posts[index].title, posts[index]))
       },
       child: Card(
         elevation: 15,

@@ -10,8 +10,6 @@ class MockRepository extends Mock implements IRepository {}
 class MockLoginViewModel extends Mock implements LoginViewModel {
   MockLoginViewModel() {
     var testing = ProviderContainer();
-    var temp1333 = testing.read(token);
-    var temp1444 = testing.read(tokenExpiration);
 
     var here = 14;
   }
@@ -26,18 +24,18 @@ void main() {
     test("Testing", () async {
       var tokenTest = await repository.getToken();
       var tokenExpirationTest = await repository.getTokenExpiration();
-      final container = ProviderContainer(overrides: [
-        token.overrideWithProvider(
-            FutureProvider((ref) async => await repository.getToken())),
-        tokenExpiration.overrideWithProvider(FutureProvider(
-            (ref) async => await repository.getTokenExpiration())),
-        loginViewModelProvider.overrideWithProvider(Provider((ref) {
-          return MockLoginViewModel();
-        }))
-      ]);
+      // final container = ProviderContainer(overrides: [
+      //   token.overrideWithProvider(
+      //       FutureProvider((ref) async => await repository.getToken())),
+      //   tokenExpiration.overrideWithProvider(FutureProvider(
+      //       (ref) async => await repository.getTokenExpiration())),
+      //   loginViewModelProvider.overrideWithProvider(Provider((ref) {
+      //     return MockLoginViewModel();
+      //   }))
+      // ]);
 
-      var temp = container.read(loginViewModelProvider);
-      var anotehrTemp = 14;
+      // var temp = container.read(loginViewModelProvider);
+      // var anotehrTemp = 14;
     });
   });
 }

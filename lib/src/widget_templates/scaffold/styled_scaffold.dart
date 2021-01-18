@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:silverliningsreddit/src/models/models.dart';
-import 'package:silverliningsreddit/src/repositories/repository.dart';
 import 'package:silverliningsreddit/src/widget_templates/scaffold/scaffold_view_model.dart';
 
 import '../navigation_drawer.dart';
@@ -11,9 +9,7 @@ class StyledScaffold extends HookWidget {
   final String pageTitle;
   final Widget body;
   final bool showAppDrawer;
-  final Repository repository;
-  StyledScaffold(this.pageTitle, this.body, this.repository,
-      {this.showAppDrawer = true});
+  StyledScaffold(this.pageTitle, this.body, {this.showAppDrawer = true});
   @override
   Widget build(BuildContext context) {
     final subreddits = useProvider(subredditProvider);
