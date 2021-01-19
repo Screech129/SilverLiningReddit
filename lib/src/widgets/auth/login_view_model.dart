@@ -11,25 +11,6 @@ class LoginViewModel {
   final Reader read;
   LoginViewModel(this.read);
 
-  Future<bool> isAuthenticated() async {
-    var repo = read(repositoryProvider);
-    var secureStorage = read(secureStorageProvider);
-
-    var token = await repo.getToken();
-    var tokenExpiration = await repo.getTokenExpiration();
-
-    if (token != null) {
-      if (DateTime.parse(tokenExpiration).isBefore(DateTime.now())) {
-        final String refreshToken = await repo.getRefreshToken();
-        var response = await repo.refreshAccessToken(refreshToken);
-        _saveTokenInfo(response, secureStorage);
-        return true;
-      }
-      return true;
-    }
-    return false;
-  }
-
   Future<void> saveAccessToken(String authToken) async {
     var repo = read(repositoryProvider);
     var secureStorage = read(secureStorageProvider);
